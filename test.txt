@@ -1,4 +1,192 @@
-nfckyegafaer
-nfvuiekrgieranv
-nufeihfaweh
-bvybsvuhwe
+-----Cal Ard-----
+
+#include <Keypad.h>
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(13, 12, 11, 10, 9, 8);
+
+const byte ROWS = 4;
+const byte COLS = 4;
+
+char hexaKeys[ROWS][COLS] = {
+  {'7','8','9','/'},
+  {'4','5','6','*'},
+  {'1','2','3','-'},
+  {'C','0','=','+'}
+};
+
+byte rowPins[ROWS] = {7, 6, 5, 4};
+byte colPins[COLS] = {3, 2, 1, 0};
+
+Keypad cKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
+
+void setup() {
+  lcd.begin(16, 2);
+  lcd.clear();
+  lcd.print("Calculator:");
+}
+
+String input1 = "";
+String input2 = "";
+float num1 = 0;
+float num2 = 0;
+char op = ' ';
+float result;
+
+void loop() {
+  char key = cKeypad.getKey();
+  if (key) {
+    if (isdigit(key)) {
+      if (op == ' ') {
+        input1 += key;
+        lcd.setCursor(12, 0);
+        lcd.print(input1);
+      } else {
+        input2 += key;
+        lcd.setCursor(12, 1);
+        lcd.print(input2);
+      }
+    } else if (key == '=' || key == '+' || key == '-' || key == '*' || key == '/') {
+      if (key == '=') {
+        num1 = input1.toFloat();
+        num2 = input2.toFloat();
+        switch (op) {
+          case '+': 
+            result = num1 + num2;
+            break;
+            
+          case '-':
+            result = num1 - num2;
+            break;
+            
+          case '*':
+            result = num1 * num2;
+            break;
+          case '/':
+            result = (num2 != 0) ? num1 / num2 : 0; 
+            break;
+        }
+        lcd.clear();
+        lcd.print("Result:");
+        lcd.setCursor(0, 1);
+        lcd.print(result);
+        input1 = "";
+        input2 = "";
+        op = ' ';
+      } else {
+        op = key;
+        lcd.setCursor(0, 1);
+        lcd.print(op);
+      }
+    } else if (key == 'C') {
+      input1 = "";
+      input2 = "";
+      num1 = 0;
+      num2 = 0;
+      op = ' ';
+      lcd.clear();
+      lcd.print("Calculator:");
+    }
+  }
+}
+
+------------------------------------------------------------------------------------------------------
+
+-----Tra.Li PIC-----
+
+void main() {
+ TRISB = 0;
+
+ while(1){
+ PORTB.RB0 = 0;
+ PORTB.RB1 = 0;
+ PORTB.RB2 = 1;
+ PORTB.RB3 = 0;
+ PORTB.RB4 = 0;
+ PORTB.RB5 = 1;
+
+ DELAY_MS(300);
+
+ PORTB.RB0 = 0;
+ PORTB.RB1 = 1;
+ PORTB.RB2 = 1;
+ PORTB.RB3 = 0;
+ PORTB.RB4 = 1;
+ PORTB.RB5 = 0;
+ 
+ DELAY_MS(150);
+ 
+ PORTB.RB0 = 1;
+ PORTB.RB1 = 0;
+ PORTB.RB2 = 0;
+ PORTB.RB3 = 1;
+ PORTB.RB4 = 0;
+ PORTB.RB5 = 0;
+ 
+ DELAY_MS(300);
+
+ PORTB.RB0 = 0;
+ PORTB.RB1 = 1;
+ PORTB.RB2 = 0;
+ PORTB.RB3 = 1;
+ PORTB.RB4 = 1;
+ PORTB.RB5 = 0;
+ 
+ DELAY_MS(150);
+ }
+}
+
+------------------------------------------------------------------------------------------------------
+
+-----Tra.Li Ard-----
+
+void setup() {
+  int x=2;
+  while(x<14){
+    pinMode(x,OUTPUT);
+    x++;
+  }
+  // put your setup code here, to run once:
+}
+
+void loop() {
+  digitalWrite(13,LOW);
+  digitalWrite(12,LOW);
+  digitalWrite(11,HIGH);
+  digitalWrite(10,LOW);
+  digitalWrite(9,LOW);
+  digitalWrite(8,HIGH);
+
+  delay(2000);
+
+  digitalWrite(13,LOW);
+  digitalWrite(12,HIGH);
+  digitalWrite(11,HIGH);
+  digitalWrite(10,LOW);
+  digitalWrite(9,HIGH);
+  digitalWrite(8,LOW);
+
+   delay(1000);
+
+  digitalWrite(13,HIGH);
+  digitalWrite(12,LOW);
+  digitalWrite(11,LOW);
+  digitalWrite(10,HIGH);
+  digitalWrite(9,LOW);
+  digitalWrite(8,LOW);
+
+  delay(2000);
+
+  digitalWrite(13,LOW);
+  digitalWrite(12,HIGH);
+  digitalWrite(11,LOW);
+  digitalWrite(10,HIGH);
+  digitalWrite(9,HIGH);
+  digitalWrite(8,LOW);
+
+  delay(1000);
+
+  // put your main code here, to run repeatedly:
+}
+
+------------------------------------------------------------------------------------------------------

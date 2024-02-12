@@ -190,3 +190,64 @@ void loop() {
 }
 
 ------------------------------------------------------------------------------------------------------
+
+-----Ra.Sys Ard-----
+
+#include <Servo.h>
+#include<LiquidCrystal.h>
+
+LiquidCrystal lcd(13,12,11,10,9,8);
+Servo test_1;
+
+void setup() {
+test_1.attach(3);
+pinMode(5,INPUT);
+lcd.begin(16, 2);
+  // put your setup code here, to run once:
+}
+
+void loop() {
+  
+   int x=digitalRead(5);
+    if(x==1){
+      lcd.setCursor(0, 0);
+      lcd.print("Ditected!!");
+    }
+
+  else{
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Searching...");
+    lcd.clear();
+  }
+
+  for (int i=0;i<180;i++){
+    test_1.write(i);  
+  }
+
+    if(x==1){
+    lcd.setCursor(0, 0);
+    lcd.print("Ditected!!");
+    }
+  else{
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Searching...");
+    lcd.clear();
+  }
+
+  for(int h=180;h>0;h--){
+    test_1.write(h); 
+  }
+
+  if(x==1){
+    lcd.setCursor(0, 0);
+    lcd.print("Ditected!!");
+    }
+  else{
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Searching...");
+    lcd.clear();
+  }
+}
